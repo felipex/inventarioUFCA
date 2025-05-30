@@ -18,6 +18,7 @@ from django.contrib import admin
 from django.urls import path, include
 
 urlpatterns = [
+    path('', include('inventario.urls')),  # Root path shows inventario
     path('inventario/', include('inventario.urls')),
     path('admin/', admin.site.urls),
 ]
