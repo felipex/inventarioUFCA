@@ -1,0 +1,67 @@
+
+{% extends 'inventario/base.html' %}
+
+{% block title %}Lista de Setores - Sistema de Inventário{% endblock %}
+
+{% block header %}Setores - Lista Completa{% endblock %}
+
+{% block nav_links %}
+<a href="{% url 'setor_create' %}">Novo Setor</a>
+{% endblock %}
+
+{% block content %}
+<div style="display: flex; justify-content: between; align-items: center; margin-bottom: 2rem;">
+    <h2>Lista de Setores</h2>
+    <div>
+        <strong>Total: {{ total_setores }} setor(es)</strong>
+        <a href="{% url 'setor_create' %}" style="margin-left: 1rem; background-color: #27ae60; color: white; padding: 0.5rem 1rem; text-decoration: none; border-radius: 4px;">+ Novo Setor</a>
+    </div>
+</div>
+
+{% if messages %}
+    {% for message in messages %}
+        <div style="padding: 1rem; margin-bottom: 1rem; border-radius: 4px; background-color: {% if message.tags == 'success' %}#d4edda; color: #155724; border: 1px solid #c3e6cb{% elif message.tags == 'error' %}#f8d7da; color: #721c24; border: 1px solid #f5c6cb{% endif %}">
+            {{ message }}
+        </div>
+    {% endfor %}
+{% endif %}
+
+<div style="overflow-x: auto;">
+    <table style="width: 100%; border-collapse: collapse; box-shadow: 0 2px 8px rgba(0,0,0,0.1);">
+        <thead style="background-color: #34495e; color: white;">
+            <tr>
+                <th style="padding: 1rem; text-align: left;">Código</th>
+                <th style="padding: 1rem; text-align: left;">Descrição</th>
+                <th style="padding: 1rem; text-align: center;">Localizações</th>
+                <th style="padding: 1rem; text-align: center;">Data Criação</th>
+                <th style="padding: 1rem; text-align: center;">Ações</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for setor in setores %}
+            <tr style="border-bottom: 1px solid #ddd; {% cycle 'background-color: #f8f9fa;' '' %}">
+                <td style="padding: 1rem; font-weight: bold;">{{ setor.codigo }}</td>
+                <td style="padding: 1rem;">{{ setor.descricao }}</td>
+                <td style="padding: 1rem; text-align: center;">
+                    <span style="background-color: #3498db; color: white; padding: 0.2rem 0.5rem; border-radius: 12px; font-size: 0.8rem;">
+                        {{ setor.total_localizacoes }}
+                    </span>
+                </td>
+                <td style="padding: 1rem; text-align: center;">{{ setor.date_inc|date:"d/m/Y" }}</td>
+                <td style="padding: 1rem; text-align: center;">
+                    <a href="{% url 'setor_detail' setor.id %}" style="color: #3498db; text-decoration: none; margin-right: 0.5rem;">Ver</a>
+                    <a href="{% url 'setor_edit' setor.id %}" style="color: #f39c12; text-decoration: none; margin-right: 0.5rem;">Editar</a>
+                    <a href="{% url 'setor_delete' setor.id %}" style="color: #e74c3c; text-decoration: none;">Excluir</a>
+                </td>
+            </tr>
+            {% empty %}
+            <tr>
+                <td colspan="5" style="padding: 2rem; text-align: center; color: #7f8c8d;">
+                    Nenhum setor cadastrado. <a href="{% url 'setor_create' %}">Criar primeiro setor</a>
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+{% endblock %}

@@ -1,0 +1,81 @@
+
+{% extends 'inventario/base.html' %}
+
+{% block title %}{{ setor.codigo }} - Detalhes do Setor{% endblock %}
+
+{% block header %}Setor: {{ setor.codigo }}{% endblock %}
+
+{% block nav_links %}
+<a href="{% url 'setor_list' %}">Lista de Setores</a>
+<a href="{% url 'setor_edit' setor.id %}">Editar</a>
+{% endblock %}
+
+{% block content %}
+{% if messages %}
+    {% for message in messages %}
+        <div style="padding: 1rem; margin-bottom: 1rem; border-radius: 4px; background-color: {% if message.tags == 'success' %}#d4edda; color: #155724; border: 1px solid #c3e6cb{% elif message.tags == 'error' %}#f8d7da; color: #721c24; border: 1px solid #f5c6cb{% endif %}">
+            {{ message }}
+        </div>
+    {% endfor %}
+{% endif %}
+
+<div style="display: grid; grid-template-columns: 1fr 1fr; gap: 2rem; margin-bottom: 2rem;">
+    <div style="background-color: #f8f9fa; padding: 1.5rem; border-radius: 8px;">
+        <h3 style="margin-top: 0; color: #2c3e50;">Informações do Setor</h3>
+        <p><strong>Código:</strong> {{ setor.codigo }}</p>
+        <p><strong>Descrição:</strong> {{ setor.descricao }}</p>
+        <p><strong>Data de Criação:</strong> {{ setor.date_inc|date:"d/m/Y H:i" }}</p>
+        <p><strong>Última Modificação:</strong> {{ setor.date_mod|date:"d/m/Y H:i" }}</p>
+    </div>
+    
+    <div style="background-color: #e8f5e8; padding: 1.5rem; border-radius: 8px;">
+        <h3 style="margin-top: 0; color: #27ae60;">Estatísticas</h3>
+        <p><strong>Total de Localizações:</strong> {{ total_localizacoes }}</p>
+        <p><strong>Total de Materiais:</strong> 
+            {% for loc in localizacoes %}{{ loc.total_materiais }}{% if not forloop.last %} + {% endif %}{% empty %}0{% endfor %} = 
+            {% with total=0 %}{% for loc in localizacoes %}{% with total=total|add:loc.total_materiais %}{% endwith %}{% endfor %}{{ total }}{% endwith %}
+        </p>
+    </div>
+</div>
+
+<div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem;">
+    <h3>Localizações do Setor</h3>
+    <div>
+        <a href="{% url 'setor_edit' setor.id %}" style="background-color: #f39c12; color: white; padding: 0.5rem 1rem; text-decoration: none; border-radius: 4px; margin-right: 0.5rem;">Editar Setor</a>
+        <a href="{% url 'setor_delete' setor.id %}" style="background-color: #e74c3c; color: white; padding: 0.5rem 1rem; text-decoration: none; border-radius: 4px;">Excluir Setor</a>
+    </div>
+</div>
+
+{% if localizacoes %}
+<div style="overflow-x: auto;">
+    <table style="width: 100%; border-collapse: collapse; box-shadow: 0 2px 8px rgba(0,0,0,0.1);">
+        <thead style="background-color: #34495e; color: white;">
+            <tr>
+                <th style="padding: 1rem; text-align: left;">Código</th>
+                <th style="padding: 1rem; text-align: left;">Descrição</th>
+                <th style="padding: 1rem; text-align: center;">Materiais</th>
+                <th style="padding: 1rem; text-align: center;">Data Criação</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for localizacao in localizacoes %}
+            <tr style="border-bottom: 1px solid #ddd; {% cycle 'background-color: #f8f9fa;' '' %}">
+                <td style="padding: 1rem; font-weight: bold;">{{ localizacao.codigo }}</td>
+                <td style="padding: 1rem;">{{ localizacao.descricao }}</td>
+                <td style="padding: 1rem; text-align: center;">
+                    <span style="background-color: #3498db; color: white; padding: 0.2rem 0.5rem; border-radius: 12px; font-size: 0.8rem;">
+                        {{ localizacao.total_materiais }}
+                    </span>
+                </td>
+                <td style="padding: 1rem; text-align: center;">{{ localizacao.date_inc|date:"d/m/Y" }}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+{% else %}
+<div style="text-align: center; padding: 2rem; background-color: #f8f9fa; border-radius: 8px; color: #7f8c8d;">
+    Nenhuma localização cadastrada para este setor.
+</div>
+{% endif %}
+{% endblock %}
