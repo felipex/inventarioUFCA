@@ -44,8 +44,8 @@
         {% if setor %}
         <div style="margin-bottom: 1.5rem; padding: 1rem; background-color: #e9ecef; border-radius: 4px;">
             <h4 style="margin-top: 0; color: #495057;">Informações de Auditoria</h4>
-            <p style="margin: 0.5rem 0;"><strong>Criado em:</strong> {{ setor.date_inc|date:"d/m/Y H:i" }}</p>
-            <p style="margin: 0.5rem 0;"><strong>Modificado em:</strong> {{ setor.date_mod|date:"d/m/Y H:i" }}</p>
+            <p style="margin: 0.5rem 0;"><strong>Criado em:</strong> {{ setor.date_inc|date:"d/m/Y" }}</p>
+            <p style="margin: 0.5rem 0;"><strong>Modificado em:</strong> {{ setor.date_mod|date:"d/m/Y" }}</p>
         </div>
         {% endif %}
         

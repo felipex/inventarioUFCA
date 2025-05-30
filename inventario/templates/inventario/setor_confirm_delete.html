@@ -28,7 +28,7 @@
         <div style="background-color: white; padding: 1rem; border-radius: 4px; margin: 1rem 0; border: 1px solid #f5c6cb;">
             <p><strong>Código:</strong> {{ setor.codigo }}</p>
             <p><strong>Descrição:</strong> {{ setor.descricao }}</p>
-            <p><strong>Criado em:</strong> {{ setor.date_inc|date:"d/m/Y H:i" }}</p>
+            <p><strong>Criado em:</strong> {{ setor.date_inc|date:"d/m/Y" }}</p>
         </div>
         
         {% if localizacoes_count > 0 %}
