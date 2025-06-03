@@ -12,6 +12,11 @@ from .models import Setor, Localizacao, Material
 def index(request):
     return render(request, 'inventario/index.html')
 
+
+def login(request):
+    return render(request, 'inventario/login.html')
+
+
 def setor_list(request):
     """Lista todos os setores com informações adicionais"""
     setores = Setor.objects.annotate(

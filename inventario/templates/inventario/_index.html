@@ -1,0 +1,31 @@
+
+{% extends 'inventario/base.html' %}
+
+{% block title %}Página Inicial - Sistema de Inventário{% endblock %}
+
+{% block header %}Sistema de Inventário - Controle de Materiais{% endblock %}
+
+{% block content %}
+<h2>Bem-vindo ao Sistema de Inventário</h2>
+<p>Este sistema permite o controle e gerenciamento de materiais, setores e localizações.</p>
+
+<div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 2rem; margin-top: 2rem;">
+    <div style="border: 1px solid #ddd; padding: 1.5rem; border-radius: 8px;">
+        <h3>Materiais</h3>
+        <p>Gerencie os materiais do inventário</p>
+        <a href="/admin/inventario/material/" style="color: #2c3e50; text-decoration: none;">Ver Materiais →</a>
+    </div>
+    
+    <div style="border: 1px solid #ddd; padding: 1.5rem; border-radius: 8px;">
+        <h3>Setores</h3>
+        <p>Configure os setores da organização</p>
+        <a href="{% url 'setor_list' %}" style="color: #2c3e50; text-decoration: none;">Ver Setores →</a>
+    </div>
+    
+    <div style="border: 1px solid #ddd; padding: 1.5rem; border-radius: 8px;">
+        <h3>Localizações</h3>
+        <p>Gerencie as localizações dos materiais</p>
+        <a href="/admin/inventario/localizacao/" style="color: #2c3e50; text-decoration: none;">Ver Localizações →</a>
+    </div>
+</div>
+{% endblock %}
